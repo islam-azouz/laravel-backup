@@ -82,6 +82,30 @@ BACKUP_NOTIFICATION_MAIL=ops@example.com
 
 If the consuming app already has `config/backup.php`, also confirm that `notifications.mail.from.address` is not empty.
 
+If Composer already failed during `composer require`, recover with this sequence:
+
+```bash
+composer require tenancy-tools/laravel-tenant-backup:dev-main --no-scripts
+```
+
+Then set the mail values in `.env`:
+
+```env
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+BACKUP_NOTIFICATION_MAIL=ops@example.com
+```
+
+Then run:
+
+```bash
+php artisan config:clear
+php artisan package:discover
+php artisan vendor:publish --tag=tenant-backup-config
+php artisan vendor:publish --tag=tenant-backup-migrations
+php artisan migrate
+```
+
 ## Post Install
 
 Review `config/tenant-backup.php` and adjust only what is app-specific:
