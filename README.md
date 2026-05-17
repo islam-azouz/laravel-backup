@@ -28,22 +28,30 @@ This package is designed for apps that:
 - store settings in a model similar to `App\\Models\\Settings`
 - restore MySQL dumps through the local `mysql` CLI binary
 
-## Install From A Private GitHub Repository
+## Install From GitHub
 
 Inside the target application:
 
 ```bash
-composer config repositories.tenant-backup vcs git@github.com:YOUR-USERNAME/laravel-tenant-backup.git
+composer config repositories.tenant-backup vcs https://github.com/islam-azouz/laravel-backup.git
 composer require tenancy-tools/laravel-tenant-backup:dev-main
 php artisan vendor:publish --tag=tenant-backup-config
 php artisan vendor:publish --tag=tenant-backup-migrations
 php artisan migrate
 ```
 
-If the repository is private over HTTPS instead of SSH:
+You still need the `composer config repositories...` step even when the repository is public, because this package is hosted on GitHub directly and is not published on Packagist.
+
+If you later publish the package on Packagist, installation becomes simply:
 
 ```bash
-composer config repositories.tenant-backup vcs https://github.com/YOUR-USERNAME/laravel-tenant-backup.git
+composer require tenancy-tools/laravel-tenant-backup:dev-main
+```
+
+If the GitHub repository is private, add a GitHub token first:
+
+```bash
+composer config repositories.tenant-backup vcs https://github.com/islam-azouz/laravel-backup.git
 composer config --global github-oauth.github.com YOUR_GITHUB_TOKEN
 composer require tenancy-tools/laravel-tenant-backup:dev-main
 ```
