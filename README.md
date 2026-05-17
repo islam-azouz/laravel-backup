@@ -2,6 +2,13 @@
 
 Tenant-aware Laravel backup package built on top of `spatie/laravel-backup`.
 
+## Supported Versions
+
+- Laravel 9, 10, 11, and 12
+- PHP 8.0+
+
+The package Composer constraints are intentionally broad enough to install into older Laravel apps, while Laravel itself still decides the final PHP version required in each target app.
+
 ## Features
 
 - create, list, delete, and restore database backups
@@ -15,7 +22,7 @@ Tenant-aware Laravel backup package built on top of `spatie/laravel-backup`.
 
 This package is designed for apps that:
 
-- use Laravel 12
+- use Laravel 9+
 - use `spatie/laravel-backup`
 - run in a tenant context where `tenant()` is available
 - store settings in a model similar to `App\\Models\\Settings`
