@@ -30,6 +30,13 @@ This package is designed for apps that:
 
 ## Install From GitHub
 
+Before installing, make sure the target application already has a valid sender email configured because `spatie/laravel-backup` validates mail settings during `artisan package:discover`:
+
+```env
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
 Inside the target application:
 
 ```bash
@@ -55,6 +62,25 @@ composer config repositories.tenant-backup vcs https://github.com/islam-azouz/la
 composer config --global github-oauth.github.com YOUR_GITHUB_TOKEN
 composer require tenancy-tools/laravel-tenant-backup:dev-main
 ```
+
+## Troubleshooting
+
+If installation stops with:
+
+```text
+Spatie\Backup\Exceptions\InvalidConfig
+No sender email address specified
+```
+
+set these values in the target app `.env` first, then rerun `php artisan package:discover` or rerun Composer:
+
+```env
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+BACKUP_NOTIFICATION_MAIL=ops@example.com
+```
+
+If the consuming app already has `config/backup.php`, also confirm that `notifications.mail.from.address` is not empty.
 
 ## Post Install
 
