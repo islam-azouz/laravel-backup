@@ -30,12 +30,7 @@ This package is designed for apps that:
 
 ## Install From GitHub
 
-Before installing, make sure the target application already has a valid sender email configured because `spatie/laravel-backup` validates mail settings during `artisan package:discover`:
-
-```env
-MAIL_FROM_ADDRESS=noreply@example.com
-MAIL_FROM_NAME="${APP_NAME}"
-```
+The package now applies a safe fallback sender during installation so `composer require` does not fail just because mail settings are still empty in the target app.
 
 Inside the target application:
 
@@ -72,7 +67,7 @@ Spatie\Backup\Exceptions\InvalidConfig
 No sender email address specified
 ```
 
-set these values in the target app `.env` first, then rerun `php artisan package:discover` or rerun Composer:
+set these values in the target app `.env`, then rerun `php artisan package:discover` or rerun Composer:
 
 ```env
 MAIL_FROM_ADDRESS=noreply@example.com
@@ -81,6 +76,14 @@ BACKUP_NOTIFICATION_MAIL=ops@example.com
 ```
 
 If the consuming app already has `config/backup.php`, also confirm that `notifications.mail.from.address` is not empty.
+
+After installation, you should still set real mail values before using backup notifications in production:
+
+```env
+MAIL_FROM_ADDRESS=noreply@example.com
+MAIL_FROM_NAME="${APP_NAME}"
+BACKUP_NOTIFICATION_MAIL=ops@example.com
+```
 
 If Composer already failed during `composer require`, recover with this sequence:
 

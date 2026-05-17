@@ -10,6 +10,26 @@ class TenantBackupServiceProvider extends ServiceProvider
     public function register(): void
     {
         $this->mergeConfigFrom(__DIR__ . '/../config/tenant-backup.php', 'tenant-backup');
+
+        $mailFromAddress = (string) (config('backup.notifications.mail.from.address')
+            ?: config('mail.from.address')
+            ?: env('MAIL_FROM_ADDRESS')
+            ?: 'hello@example.com');
+
+        $mailFromName = (string) (config('backup.notifications.mail.from.name')
+            ?: config('mail.from.name')
+            ?: env('MAIL_FROM_NAME')
+            ?: config('app.name', 'Laravel'));
+
+        $notificationAddress = (string) (config('backup.notifications.mail.to')
+            ?: env('BACKUP_NOTIFICATION_MAIL')
+            ?: $mailFromAddress);
+
+        config([
+            'backup.notifications.mail.from.address' => $mailFromAddress,
+            'backup.notifications.mail.from.name' => $mailFromName,
+            'backup.notifications.mail.to' => $notificationAddress,
+        ]);
     }
 
     public function boot(): void
