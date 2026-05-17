@@ -1,0 +1,28 @@
+{
+    "name": "tenancy-tools/laravel-tenant-backup",
+    "description": "Tenant-aware database backup module for Laravel applications using Spatie Backup.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "illuminate/contracts": "^12.0",
+        "illuminate/http": "^12.0",
+        "illuminate/support": "^12.0",
+        "spatie/laravel-backup": "*",
+        "symfony/process": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "TenancyTools\\TenantBackup\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TenancyTools\\TenantBackup\\TenantBackupServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
